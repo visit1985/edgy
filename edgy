@@ -48,7 +48,7 @@ if len(sys.argv) < 2 or sys.argv[1] == "--help":
     print_usage()
 
 elif sys.argv[1] == "--kill":
-    print("Attempting to kill any running instances...")
+    print("attempting to kill any running instances")
     os.system('pkill -9 -f ' + script)
     exit()
 
@@ -65,19 +65,17 @@ elif sys.argv[1] == "--daemon":
     try:
         cfgfile = open(rcfile)
     except IOError as e:
-        if not os.path.exists(cfgdir):
-            os.makedirs(cfgdir)
         cfgfile = open(rcfile,'w')
-        Config.add_section('Hot Corners')
-        Config.set('Hot Corners','top_left_corner_command', 'echo "top left corner"')
-        Config.set('Hot Corners','top_right_corner_command', 'echo "top right corner"')
-        Config.set('Hot Corners','bottom_right_corner_command', 'echo "bottom right corner"')
-        Config.set('Hot Corners','bottom_left_corner_command', 'echo "bottom left corner"')
-        Config.add_section('Hot Edges')
-        Config.set('Hot Edges','left_edge_command', 'echo "left edge"')
-        Config.set('Hot Edges','top_edge_command', 'echo "top edge"')
-        Config.set('Hot Edges','right_edge_command', 'echo "right edge"')
-        Config.set('Hot Edges','bottom_edge_command', 'echo "bottom edge"')
+        Config.add_section('hot corners')
+        Config.set('hot corners','top_left_corner_command', 'echo "top left corner"')
+        Config.set('hot corners','top_right_corner_command', 'echo "top right corner"')
+        Config.set('hot corners','bottom_right_corner_command', 'echo "bottom right corner"')
+        Config.set('hot corners','bottom_left_corner_command', 'echo "bottom left corner"')
+        Config.add_section('hot edges')
+        Config.set('hot edges','left_edge_command', 'echo "left edge"')
+        Config.set('hot edges','top_edge_command', 'echo "top edge"')
+        Config.set('hot edges','right_edge_command', 'echo "right edge"')
+        Config.set('hot edges','bottom_edge_command', 'echo "bottom edge"')
         Config.write(cfgfile)
         cfgfile.close()
         print(rcfile + " created")
@@ -89,64 +87,64 @@ elif sys.argv[1] == "--daemon":
 
         # left edge
         if pos[0] == left and pos[1] > top + radius and pos[1] < bottom - radius:
-            if Config.get('Hot Edges','left_edge_command') != '':
-                os.system('(' + Config.get('Hot Edges','left_edge_command') + ') &')
+            if Config.get('hot edges','left_edge_command') != '':
+                os.system('(' + Config.get('hot edges','left_edge_command') + ') &')
                 while pos[0] == left and pos[1] > top + radius and pos[1] < bottom - radius:
                     pos = mousepos()
                     time.sleep(check_intervall)
 
         # top left corner
         elif (pos[0] <= left + radius and pos[1] == top) or (pos[0] == left and pos[1] <= top + radius):
-            if Config.get('Hot Corners','top_left_corner_command') != '':
-                os.system('(' + Config.get('Hot Corners','top_left_corner_command') + ') &')
+            if Config.get('hot corners','top_left_corner_command') != '':
+                os.system('(' + Config.get('hot corners','top_left_corner_command') + ') &')
                 while (pos[0] <= left + radius and pos[1] == top) or (pos[0] == left and pos[1] <= top + radius):
                     pos = mousepos()
                     time.sleep(check_intervall)
 
         # top edge
         elif pos[0] > left + radius and pos[0] < right - radius and pos[1] == top:
-            if Config.get('Hot Edges','top_edge_command') != '':
-                os.system('(' + Config.get('Hot Edges','top_edge_command') + ') &')
+            if Config.get('hot edges','top_edge_command') != '':
+                os.system('(' + Config.get('hot edges','top_edge_command') + ') &')
                 while pos[0] > left + radius and pos[0] < right - radius and pos[1] == top:
                     pos = mousepos()
                     time.sleep(check_intervall)
 
         # top right corner
         elif (pos[0] >= right - radius and pos[1] == top) or (pos[0] == right and pos[1] <= top + radius):
-            if Config.get('Hot Corners','top_right_corner_command') != '':
-                os.system('(' + Config.get('Hot Corners','top_right_corner_command') + ') &')
+            if Config.get('hot corners','top_right_corner_command') != '':
+                os.system('(' + Config.get('hot corners','top_right_corner_command') + ') &')
                 while (pos[0] >= right - radius and pos[1] == top) or (pos[0] == right and pos[1] <= top + radius):
                     pos = mousepos()
                     time.sleep(check_intervall)
 
         # right edge
         elif pos[0] == right and pos[1] > top + radius and pos[1] < bottom - radius:
-            if Config.get('Hot Edges','right_edge_command') != '':
-                os.system('(' + Config.get('Hot Edges','right_edge_command') + ') &')
+            if Config.get('hot edges','right_edge_command') != '':
+                os.system('(' + Config.get('hot edges','right_edge_command') + ') &')
                 while pos[0] == right and pos[1] > top + radius and pos[1] < bottom - radius:
                     pos = mousepos()
                     time.sleep(check_intervall)
 
         # bottom right corner
         elif (pos[0] >= right - radius and pos[1] == bottom) or (pos[0] == right and pos[1] >= bottom - radius):
-            if Config.get('Hot Corners','bottom_right_corner_command') != '':
-                os.system('(' + Config.get('Hot Corners','bottom_right_corner_command') + ') &')
+            if Config.get('hot corners','bottom_right_corner_command') != '':
+                os.system('(' + Config.get('hot corners','bottom_right_corner_command') + ') &')
                 while (pos[0] >= right - radius and pos[1] == bottom) or (pos[0] == right and pos[1] >= bottom - radius):
                     pos = mousepos()
                     time.sleep(check_intervall)
 
         # bottom edge
         elif pos[0] > left + radius and pos[0] < right - radius and pos[1] == bottom:
-            if Config.get('Hot Edges','bottom_edge_command') != '':
-                os.system('(' + Config.get('Hot Edges','bottom_edge_command') + ') &')
+            if Config.get('hot edges','bottom_edge_command') != '':
+                os.system('(' + Config.get('hot edges','bottom_edge_command') + ') &')
                 while pos[0] > left + radius and pos[0] < right - radius and pos[1] == bottom:
                     pos = mousepos()
                     time.sleep(check_intervall)
 
         # bottom left corner
         elif (pos[0] <= left + radius and pos[1] == bottom) or (pos[0] == left and pos[1] >= bottom - radius):
-            if Config.get('Hot Corners','bottom_left_corner_command') != '':
-                os.system('(' + Config.get('Hot Corners','bottom_left_corner_command') + ') &')
+            if Config.get('hot corners','bottom_left_corner_command') != '':
+                os.system('(' + Config.get('hot corners','bottom_left_corner_command') + ') &')
                 while (pos[0] <= left + radius and pos[1] == bottom) or (pos[0] == left and pos[1] >= bottom - radius):
                     pos = mousepos()
                     time.sleep(check_intervall)
